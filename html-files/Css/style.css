@@ -117,7 +117,7 @@ h1, h2, h3 {
     position: relative;
     height: 98vh;
     background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-                url("../images-files/travel-hd.jpg") center/cover no-repeat;
+                url("../Images/travel-hd.jpg") center/cover no-repeat;
 }
 
 .header-content {
@@ -155,42 +155,39 @@ h1, h2, h3 {
     padding: 8rem 0;
 }
 
-.row {
+
+.destination-card {
     height: 350px;
     background-color: white;
     box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    margin-bottom: 6rem;
 }
 
-.row1 { margin-bottom: 6rem; }
-
-.row1 .img-box, .row2 .text-box { float: left;  width: 50%; }
-.row2 .img-box, .row1 .text-box { float: right; width: 50%; }
-
-.row .img-box {
+.destination-card .img-box {
     height: 100%;
 }
 
-.row .img-box img {
+.destination-card .img-box img {
     display: inline-block;
     width: 100%;
-    height: 100%;
+    height: 50%;
     object-fit: cover;
 }
 
-.row .text-box {
+.destination-card .text-box {
     padding: 3rem;
     height: 100%;
     padding-top: 4rem;
 }
 
-.row .text-box p {
+.destination-card .text-box p {
     font-size: 1rem;
     line-height: 1.7;
     color: #555555;
     letter-spacing: 0.02em;
 }
 
-.row::after {
+.destination-card::after {
     content: '';
     display: block;
     clear: both;
