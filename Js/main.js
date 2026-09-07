@@ -1,5 +1,5 @@
 "use strict"
-                            // Destination cards
+                                                            // Destination cards
 const destinations = [
     {
         name: "Hidden Waterfall Paradise",
@@ -24,7 +24,15 @@ const destinations = [
         image: "Images/pexels-michael-schlierf-757699958-33315262.jpg",
         description:
             "Experience breathtaking views of towering mountains surrounded by peaceful green meadows."
-    }
+    },
+    {
+    name: "Munnar",
+    type: "Nature",
+    budget: 5000,
+    image: "Images/tea-gardens-munnar.webp",
+    description:
+        "Explore the misty hills, lush tea plantations, and peaceful valleys of Munnar, a beautiful getaway surrounded by the natural charm of Kerala."
+}
 ];
 
 
@@ -61,10 +69,20 @@ const cardContainer =
     document.querySelector("#destination-container");
 
 
-
     destinations.forEach(destination => {
     const card = createDestinationCard(destination);
         cardContainer.appendChild(card);
 });
+
+                                                                                                                                // 
+
+
+
+                                                        // SEARCH BUTTON 
+
+
+
+
+
 
 
