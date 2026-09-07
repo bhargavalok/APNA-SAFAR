@@ -1,134 +1,117 @@
-Apna Safar — Travel Blog Website
-A travel blog website built from scratch using pure HTML and CSS as part of my web development learning journey. No frameworks, no libraries — just fundamentals.
+# Apna Safar — Travel Blog Website
 
-🌍 About the Project
-Apna Safar (meaning "Our Journey" in Hindi) is a multi-page travel blog website that helps users discover hidden destinations, plan trips, and explore the world. Built as a learning project to practice real-world HTML and CSS concepts.
+A travel blog website built from scratch using HTML, CSS, and vanilla JavaScript, as part of my web development learning journey. No frameworks yet — focused on getting the fundamentals right first.
 
-📄 Pages
-Home (index.html)
+**Live Demo:** [travel-blog-website-wheat.vercel.app](https://travel-blog-website-wheat.vercel.app/)
 
-Full screen hero section with background image and dark overlay
-Showcase section with alternating image-text destination cards
-Features section with icon cards explaining what the site offers
-Footer with social media links
+---
 
-About (about.html)
+## 🌍 About the Project
 
-About Us section with two-column checklist layout
-Statistics counter section showing traveler numbers
-CTA banner linking to contact page
-Footer
+Apna Safar (meaning "Our Journey" in Hindi) is a multi-page travel blog that helps users discover hidden destinations, compare budgets, and plan trips. Built as a hands-on project to practice real-world HTML, CSS, and JavaScript concepts — not just tutorials.
 
-Contact (contact.html)
+---
 
-Two-column layout with company address and contact form
-Form with validation using HTML required attribute
-Company image inside address card
-Footer
+## 📄 Pages
 
+**Home** (`index.html`)
+- Full-screen hero section with background image and dark overlay
+- Hero-style search bar to look up destinations *(UI complete, search logic in progress)*
+- Responsive card-grid showcase section with hover effects, pulled dynamically from a JS data array
+- Features section explaining what the site offers
+- Footer with social media links
 
-🛠️ Built With
+**About** (`about.html`)
+- About Us section with a two-column checklist layout
+- Statistics counter section
+- CTA banner linking to the contact page
 
-HTML5
-CSS3
-Font Awesome 6.5 (icons)
-Google Fonts — Montserrat
+**Contact** (`contact.html`)
+- Two-column layout: company address card + contact form
+- Form validation using HTML's `required` attribute
 
+---
 
-📚 HTML Concepts Used
+## 🛠️ Built With
 
-Semantic HTML tags — header, nav, section, footer, main
-Anchor tags with smooth scroll using id and href="#section-id"
-HTML forms — input, textarea, label, button
-Form attributes — required, placeholder, type, name, id
-target="_blank" for external social media links
-loading="lazy" on images for performance
-alt attributes on all images for accessibility and SEO
-meta tags for charset, viewport, and description
-Font Awesome icons using <i> tags
-&copy; HTML entity in footer
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- Font Awesome 6.5 (icons)
+- Google Fonts — Montserrat
 
+---
 
-🎨 CSS Concepts Used
-Layout
+## 🗂️ Project Structure
 
-Float-based layouts for navbar, showcase rows, feature boxes
-Clearfix using ::after pseudo-element
-overflow: hidden as clearfix technique
-Container pattern with max-width and margin: 0 auto for centering
-Two-column layouts using float: left and float: right
+```
+apna-safar/
+├── index.html
+├── about.html
+├── contact.html
+├── README.md
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       ├── logo.png
+│       ├── hero-bg.jpg
+│       ├── company.jpg
+│       └── destinations/
+│           ├── waterfall.jpg
+│           ├── darjeeling.jpg
+│           ├── mountain-valley.jpg
+│           ├── misty-mountains.jpg
+│           ├── coastal-aerial.jpg
+│           └── munnar-tea-gardens.jpg
+```
 
-Positioning
+---
 
-position: relative and position: absolute for hero content centering
-transform: translate(-50%, -50%) for perfect centering regardless of element size
+## 📚 Key Concepts Practiced
 
-Typography
+**HTML**
+- Semantic tags — `header`, `nav`, `section`, `footer`
+- Accessible forms — `label`, `required`, `placeholder`, visually-hidden labels for screen readers
+- `loading="lazy"` and `alt` attributes for performance and accessibility
 
-Google Fonts import using @import
-Font size scale using rem units
-letter-spacing and line-height for readability
-text-transform: uppercase for headings and buttons
+**CSS**
+- Responsive grid layout (`repeat(auto-fit, minmax(...))`) for the destination showcase
+- Flexbox for component-level layout (cards, search bar)
+- CSS gradients, `box-shadow`, and hover transitions for a cohesive visual identity
+- A deliberate, limited color palette (navy + orange + red as a single accent) instead of scattering multiple accent colors
+- Mobile-first responsive breakpoints at 768px and 480px
 
-Visual Design
+**JavaScript**
+- DOM manipulation — dynamically rendering destination cards from a data array instead of hardcoding HTML
+- `template literals` for building card markup
+- (In progress) Search/filter logic for the search bar
 
-Linear gradients using linear-gradient()
-Background image with dark overlay for hero section
-background-size: cover and background-position: center
-object-fit: cover for images inside fixed height containers
-box-shadow using rgba for soft card shadows
-border-radius for rounded cards and pill-shaped buttons
-::after pseudo-element for decorative underlines on headings
+---
 
-Utility Classes
+## 🚧 Current Status
 
-Color utilities — .text-red, .text-orange, .text-grey, .text-black
-Button utilities — .btn, .btn-primary, .btn-secondary
-Background utilities — .bg-dark
+- [x] Responsive showcase grid with dynamic card rendering
+- [x] Hero-style search bar UI
+- [x] Clean, standardized project folder structure
+- [ ] Search bar filtering logic (JavaScript)
+- [ ] Filter destinations by type/budget
+- [ ] Backend integration (planned)
 
-Interactions
+---
 
-CSS transition for smooth hover effects
-Hover states on navbar links, buttons, social icons, and feature cards
-Focus states on form inputs with brand color border
+## 🚀 What I'm Learning / Next Steps
 
-Responsive Design
+This project has been about learning to think in layouts before writing CSS, understanding why consistent color and spacing decisions matter, and structuring a codebase the way real-world projects are organized rather than however feels convenient in the moment.
 
-Media queries using @media screen and (max-width)
-Two breakpoints — 768px for tablet, 480px for mobile
-Stacked layouts on mobile using float: none and width: 100%
-Fluid font scaling using html { font-size } combined with rem units
+Next steps for this project include finishing the search/filter logic in JavaScript, then gradually evolving the stack — adding a small backend, rebuilding the UI in React, and introducing a scoped AI-assisted feature (e.g. destination matching based on user input) as the project grows into a full-stack application.
 
+---
 
-📱 Responsive Breakpoints
-Screen SizeBreakpointChangesDesktop1200px+Default layoutTablet≤ 768pxStacked navbar, single column showcase and contactMobile≤ 480pxSmaller fonts, fully stacked layout
+## 👤 Author
 
-🗂️ Project Structure
-Travel-blog-Website/
-│
-├── html-files/
-│   ├── index.html
-│   ├── about.html
-│   └── contact.html
-│
-├── Css-files/
-│   └── style.css
-│
-└── images-files/
-    ├── travel-hd.jpg
-    ├── logo-transparent-wow.png
-    ├── Company_Logo.jpg
-    └── (destination images)
-
-🚀 What I Learned
-This project taught me how to think in layouts — breaking every design into nested boxes before writing a single line of code. I learned why floats need clearfix, how position: absolute works with a relative parent, and why rem units combined with a base html font-size make responsive scaling much easier.
-The biggest lesson was understanding that clean, readable code matters just as much as working code — especially when you come back to fix something three days later.
-
-🔗 Live Demo
-https://travel-blog-website-wheat.vercel.app/
-
-👤 Author
-Alok Bhargav
-
-GitHub: @bhargavalok
-Instagram: @alok_bhargav_
+**Alok Bhargav**
+- GitHub: [@bhargavalok](https://github.com/bhargavalok)
+- Instagram: [@alok_bhargav_](https://www.instagram.com/alok_bhargav_/)

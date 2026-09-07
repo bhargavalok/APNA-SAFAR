@@ -117,7 +117,7 @@ h1, h2, h3 {
     position: relative;
     height: 98vh;
     background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-                url("../Images/travel-hd.jpg") center/cover no-repeat;
+                url("../Images/hero-bg.jpg") center/cover no-repeat;
 }
 
 .header-content {
