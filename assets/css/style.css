@@ -242,6 +242,84 @@ h1, h2, h3 {
     border: 0;
 }
 
+.search-suggestions {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    list-style: none;
+    overflow: hidden;
+    z-index: 10;
+    text-align: left;
+}
+
+.search-suggestions.active {
+    display: block;
+}
+
+.suggestion-item {
+    padding: 0.9rem 1.5rem;
+    font-size: 0.95rem;
+    color: #333333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover {
+    background-color: #fff4e0;
+    color: #f0a500;
+}
+
+.suggestion-item:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #777777;
+    font-size: 1.1rem;
+    padding: 3rem 0;
+}
+
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+    max-width: 600px;
+    margin: 1.5rem auto 0 auto;
+}
+
+
+.category-chip {
+    padding: 0.5em 1.3em;
+    border: 2px solid #f0a500;
+    border-radius: 50px;
+    background: #ffffff;
+    color: #f0a500;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.category-chip:hover {
+    background: #fff4e0;
+}
+
+.category-chip.active {
+    background: linear-gradient(135deg, #f0a500, #e63946);
+    border-color: transparent;
+    color: #ffffff;
+}
 
 /* ################## SHOWCASE SECTION ################## */
 

@@ -65,24 +65,133 @@ function createDestinationCard(destination) {
 }
 
 
-const cardContainer =
-    document.querySelector("#destination-container");
+                                                                                                    // Search Section + Filter Feature
 
 
-    destinations.forEach(destination => {
-    const card = createDestinationCard(destination);
+                                                        // DOM REFERENCES
+const cardContainer = document.querySelector("#destination-container");
+const searchInput = document.querySelector("#search-input");
+const searchForm = document.querySelector("#search-form");
+const suggestionsBox = document.querySelector("#search-suggestions");
+const filtersBox = document.querySelector("#category-filters");
+
+                                                        // APP STATE
+const searchState = {
+    query: "",
+    category: "All"
+};
+
+                                                        // PURE LOGIC
+function findMatches(state) {
+    const lowerQuery = state.query.trim().toLowerCase();
+
+    return destinations.filter(destination => {
+        const matchesCategory =
+            state.category === "All" || destination.type === state.category;
+
+        const matchesQuery =
+            lowerQuery === "" ||
+            destination.name.toLowerCase().includes(lowerQuery) ||
+            destination.type.toLowerCase().includes(lowerQuery);
+
+        return matchesCategory && matchesQuery;
+    });
+}
+
+                                                        // RENDER FUNCTIONS
+function renderDestinationCards(list) {
+    cardContainer.innerHTML = "";
+
+    if (list.length === 0) {
+        cardContainer.innerHTML = `<p class="no-results">No destinations match your search. Try a different name or category.</p>`;
+        return;
+    }
+
+    list.forEach(destination => {
+        const card = createDestinationCard(destination);
         cardContainer.appendChild(card);
+    });
+}
+
+function renderSuggestions(matches) {
+    suggestionsBox.innerHTML = "";
+
+    if (matches.length === 0) {
+        suggestionsBox.classList.remove("active");
+        return;
+    }
+
+    matches.forEach(destination => {
+        const item = document.createElement("li");
+        item.className = "suggestion-item";
+        item.textContent = destination.name;
+        item.addEventListener("click", () => {
+            searchState.query = destination.name;
+            searchInput.value = destination.name;
+            suggestionsBox.classList.remove("active");
+            runSearch();
+            scrollToShowcase();
+        });
+        suggestionsBox.appendChild(item);
+    });
+
+    suggestionsBox.classList.add("active");
+}
+
+function renderCategoryChips() {
+    const categories = ["All", ...new Set(destinations.map(d => d.type))];
+
+    filtersBox.innerHTML = "";
+
+    categories.forEach(category => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "category-chip";
+        chip.textContent = category;
+        if (category === searchState.category) {
+            chip.classList.add("active");
+        }
+        filtersBox.appendChild(chip);
+    });
+}
+
+function scrollToShowcase() {
+    document.querySelector("#explore-places").scrollIntoView({ behavior: "smooth" });
+}
+
+function runSearch() {
+    const matches = findMatches(searchState);
+    renderDestinationCards(matches);
+}
+
+                                                        // EVENT WIRING
+searchInput.addEventListener("input", () => {
+    searchState.query = searchInput.value;
+    renderSuggestions(findMatches(searchState));
 });
 
-                                                                                                                                // 
+searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    searchState.query = searchInput.value;
+    suggestionsBox.classList.remove("active");
+    runSearch();
+    scrollToShowcase();
+});
 
+filtersBox.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("category-chip")) return;
 
+    searchState.category = e.target.textContent;
+    renderCategoryChips();
+    runSearch();
+});
 
-                                                        // SEARCH BUTTON 
+document.addEventListener("click", (e) => {
+    if (!searchForm.contains(e.target) && !suggestionsBox.contains(e.target)) {
+        suggestionsBox.classList.remove("active");
+    }
+});
 
-
-
-
-
-
-
+                                                        // INITIAL PAGE LOAD
+renderCategoryChips();
+runSearch();
