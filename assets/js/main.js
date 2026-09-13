@@ -74,17 +74,31 @@ const searchInput = document.querySelector("#search-input");
 const searchForm = document.querySelector("#search-form");
 const suggestionsBox = document.querySelector("#search-suggestions");
 const filtersBox = document.querySelector("#category-filters");
+const sortSelect = document.querySelector("#sort-select");
 
                                                         // APP STATE
 const searchState = {
     query: "",
-    category: "All"
+    category: "All",
+    sortBy: "relevance"
 };
 
-                                                        // PURE LOGIC
+function applySort(list, sortBy) {
+    const sorted = [...list];   // copy first, never sort the original
+    if (sortBy === "budget-asc") {
+        sorted.sort((a, b) => a.budget - b.budget);
+    } else if (sortBy === "budget-desc") {
+        sorted.sort((a, b) => b.budget - a.budget);
+    } else if (sortBy === "name-asc") {
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    return sorted;   // "relevance" falls through untouched, original order stays
+}
+
+                                                        // Find Matches 
 function findMatches(state) {
     const lowerQuery = state.query.trim().toLowerCase();
-
     return destinations.filter(destination => {
         const matchesCategory =
             state.category === "All" || destination.type === state.category;
@@ -97,6 +111,8 @@ function findMatches(state) {
         return matchesCategory && matchesQuery;
     });
 }
+
+
 
                                                         // RENDER FUNCTIONS
 function renderDestinationCards(list) {
@@ -161,8 +177,14 @@ function scrollToShowcase() {
 
 function runSearch() {
     const matches = findMatches(searchState);
-    renderDestinationCards(matches);
+    const sorted = applySort(matches, searchState.sortBy);
+    renderDestinationCards(sorted);
 }
+
+sortSelect.addEventListener("change", () => {
+    searchState.sortBy = sortSelect.value;
+    runSearch();
+});
 
                                                         // EVENT WIRING
 searchInput.addEventListener("input", () => {
@@ -195,3 +217,5 @@ document.addEventListener("click", (e) => {
                                                         // INITIAL PAGE LOAD
 renderCategoryChips();
 runSearch();
+
+

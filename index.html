@@ -45,8 +45,17 @@
                 <input type="text" placeholder="Try 'Darjeeling' or 'waterfall'" id="search-input" autocomplete="off">
                 <button type="submit">Search</button>
             </form>
-    <div id="category-filters" class="category-filters"></div>
-    <ul id="search-suggestions" class="search-suggestions"></ul>
+            <div id="category-filters" class="category-filters"></div>
+            <div class="sort-wrapper">
+                <label for="sort-select" class="sort-label">Sort by</label>
+                <select id="sort-select">
+                    <option value="relevance">Relevance</option>
+                    <option value="budget-asc">Budget ↑</option>
+                    <option value="budget-desc">Budget ↓</option>
+                    <option value="name-asc">Name: A→Z</option>
+                </select>
+            </div>
+            <ul id="search-suggestions" class="search-suggestions"></ul>
         </div>
     </div>
 </section>
