@@ -32,6 +32,14 @@ const destinations = [
     image: "assets/images/tea-gardens-munnar.webp",
     description:
         "Explore the misty hills, lush tea plantations, and peaceful valleys of Munnar, a beautiful getaway surrounded by the natural charm of Kerala."
+},
+{
+    name : "Manali",
+    type : "Hill Station",
+    budget : 8000,
+    image : "assets/images/manali.jpg",
+    description:
+    "A popular hill station in Himachal Pradesh, known for snow-capped mountains, pine forests, and adventure activities like paragliding and river rafting."
 }
 ];
 
