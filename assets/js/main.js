@@ -2,6 +2,7 @@
                                                             // Destination cards
 const destinations = [
     {
+        id: 1,
         name: "Hidden Waterfall Paradise",
         type: "Nature",
         budget: 5000,
@@ -10,6 +11,7 @@ const destinations = [
             "Discover the beauty of untouched nature where crystal-clear water cascades through lush green forests."
     },
         {
+            id: 2,
             name : "Darjeeling",
             type : "Hill Station",
             budget : 10000,
@@ -18,6 +20,7 @@ const destinations = [
             " a famous hill station in the northernmost part of West Bengal, India, nestled in the Eastern Himalayas at an elevation of about 2,042 meters"
         },
     {
+        id: 3,
         name: "Majestic Mountain Valley",
         type: "Adventure",
         budget: 7000,
@@ -26,6 +29,7 @@ const destinations = [
             "Experience breathtaking views of towering mountains surrounded by peaceful green meadows."
     },
     {
+    id: 4,
     name: "Munnar",
     type: "Nature",
     budget: 5000,
@@ -48,6 +52,8 @@ const destinations = [
 function createDestinationCard(destination) { 
     const row = document.createElement("div"); 
     row.className = "row";
+    row.dataset.id = destination.id;   
+    const favorited = isFavorite(destination.id);
     row.innerHTML = `
         <div class="img-box">
             <img 
@@ -83,12 +89,13 @@ const searchForm = document.querySelector("#search-form");
 const suggestionsBox = document.querySelector("#search-suggestions");
 const filtersBox = document.querySelector("#category-filters");
 const sortSelect = document.querySelector("#sort-select");
-
+const favoritesToggle = document.querySelector("#favorites-toggle");
                                                         // APP STATE
 const searchState = {
     query: "",
     category: "All",
-    sortBy: "relevance"
+    sortBy: "relevance",
+    favoritesOnly : false
 };
 
 function applySort(list, sortBy) {

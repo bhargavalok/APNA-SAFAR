@@ -353,6 +353,63 @@ h1, h2, h3 {
     border-color: #e63946;
 }
 
+.img-box {
+    position: relative;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    color: #999999;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.favorite-btn:hover {
+    background: #ffffff;
+    transform: scale(1.1);
+}
+
+.favorite-btn.active {
+    color: #e63946;
+}
+
+.favorites-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5em 1.2em;
+    border: 2px solid #e63946;
+    border-radius: 50px;
+    background: #ffffff;
+    color: #e63946;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.favorites-toggle:hover {
+    background: #fff0f1;
+}
+
+.favorites-toggle.active {
+    background: linear-gradient(135deg, #f0a500, #e63946);
+    border-color: transparent;
+    color: #ffffff;
+}
+
                                                 /* ################## SHOWCASE SECTION ################## */
 
 .showcase {
@@ -1055,3 +1112,5 @@ h1, h2, h3 {
     .form-wrapper .form { padding: 1.5rem; }
     .form-wrapper .company-address { padding: 1.5rem; }
 }
+
+
