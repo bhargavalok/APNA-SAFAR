@@ -1,66 +1,104 @@
 "use strict"
-                                                            // Destination cards
+                                                            // Destination data
 const destinations = [
     {
         id: 1,
         name: "Hidden Waterfall Paradise",
         type: "Nature",
         budget: 5000,
-        image: "assets/images/waterfall.jpg",
+        image: "./assets/images/waterfall.jpg",
         description:
             "Discover the beauty of untouched nature where crystal-clear water cascades through lush green forests."
     },
-        {
-            id: 2,
-            name : "Darjeeling",
-            type : "Hill Station",
-            budget : 10000,
-            image : "assets/images/darjeeling.jpg",
-            description: 
-            " a famous hill station in the northernmost part of West Bengal, India, nestled in the Eastern Himalayas at an elevation of about 2,042 meters"
-        },
+    {
+        id: 2,
+        name: "Darjeeling",
+        type: "Hill Station",
+        budget: 10000,
+        image: "./assets/images/darjeeling.jpg",
+        description:
+            "a famous hill station in the northernmost part of West Bengal, India, nestled in the Eastern Himalayas at an elevation of about 2,042 meters"
+    },
     {
         id: 3,
         name: "Majestic Mountain Valley",
         type: "Adventure",
         budget: 7000,
-        image: "assets/images/misty-mountains.jpg",
+        image: "./assets/images/misty-mountains.jpg",
         description:
             "Experience breathtaking views of towering mountains surrounded by peaceful green meadows."
     },
     {
-    id: 4,
-    name: "Munnar",
-    type: "Nature",
-    budget: 5000,
-    image: "assets/images/tea-gardens-munnar.webp",
-    description:
-        "Explore the misty hills, lush tea plantations, and peaceful valleys of Munnar, a beautiful getaway surrounded by the natural charm of Kerala."
-},
-{
-    name : "Manali",
-    type : "Hill Station",
-    budget : 8000,
-    image : "assets/images/manali.jpg",
-    description:
-    "A popular hill station in Himachal Pradesh, known for snow-capped mountains, pine forests, and adventure activities like paragliding and river rafting."
-}
+        id: 4,
+        name: "Munnar",
+        type: "Nature",
+        budget: 5000,
+        image: "./assets/images/tea-gardens-munnar.webp",
+        description:
+            "Explore the misty hills, lush tea plantations, and peaceful valleys of Munnar, a beautiful getaway surrounded by the natural charm of Kerala."
+    }
 ];
 
+                                                            // DOM REFERENCES
+const cardContainer = document.querySelector("#destination-container");
+const searchInput = document.querySelector("#search-input");
+const searchForm = document.querySelector("#search-form");
+const suggestionsBox = document.querySelector("#search-suggestions");
+const filtersBox = document.querySelector("#category-filters");
+const sortSelect = document.querySelector("#sort-select");
+const favoritesToggle = document.querySelector("#favorites-toggle");
 
+                                                            // APP STATE
+const searchState = {
+    query: "",
+    category: "All",
+    sortBy: "relevance",
+    favoritesOnly: false
+};
 
-function createDestinationCard(destination) { 
-    const row = document.createElement("div"); 
+                                                            // FAVORITES: LOAD/SAVE [ localStorage Part ]
+function loadFavorites() {
+    const stored = localStorage.getItem("favoriteDestinations");
+    return stored ? JSON.parse(stored) : [];
+}
+
+function saveFavorites(ids) {
+    localStorage.setItem("favoriteDestinations", JSON.stringify(ids));
+}
+
+let favoriteIds = loadFavorites();
+
+function isFavorite(id) {
+    return favoriteIds.includes(id);
+}
+
+function toggleFavorite(id) {
+    if (isFavorite(id)) {
+        favoriteIds = favoriteIds.filter(favId => favId !== id);
+    } else {
+        favoriteIds.push(id);
+    }
+    saveFavorites(favoriteIds);
+}
+
+                                                            // DYNAMIC CARD TEMPLATE !
+function createDestinationCard(destination) {
+    const row = document.createElement("div");
     row.className = "row";
-    row.dataset.id = destination.id;   
+    row.dataset.id = destination.id;
+
     const favorited = isFavorite(destination.id);
+
     row.innerHTML = `
         <div class="img-box">
-            <img 
-                src="${destination.image}"     
-                alt="${destination.name}"    
+            <img
+                src="${destination.image}"
+                alt="${destination.name}"
                 loading="lazy"
             >
+            <button class="favorite-btn ${favorited ? "active" : ""}" data-id="${destination.id}" aria-label="Toggle favorite">
+                <i class="fa-${favorited ? "solid" : "regular"} fa-heart"></i>
+            </button>
         </div>
         <div class="text-box">
             <h2 class="text-black">${destination.name}</h2>
@@ -78,42 +116,10 @@ function createDestinationCard(destination) {
     return row;
 }
 
-
-                                                                                                    // Search Section + Filter Feature
-
-
-                                                        // DOM REFERENCES
-const cardContainer = document.querySelector("#destination-container");
-const searchInput = document.querySelector("#search-input");
-const searchForm = document.querySelector("#search-form");
-const suggestionsBox = document.querySelector("#search-suggestions");
-const filtersBox = document.querySelector("#category-filters");
-const sortSelect = document.querySelector("#sort-select");
-const favoritesToggle = document.querySelector("#favorites-toggle");
-                                                        // APP STATE
-const searchState = {
-    query: "",
-    category: "All",
-    sortBy: "relevance",
-    favoritesOnly : false
-};
-
-function applySort(list, sortBy) {
-    const sorted = [...list];   // copy first, never sort the original
-    if (sortBy === "budget-asc") {
-        sorted.sort((a, b) => a.budget - b.budget);
-    } else if (sortBy === "budget-desc") {
-        sorted.sort((a, b) => b.budget - a.budget);
-    } else if (sortBy === "name-asc") {
-        sorted.sort((a, b) => a.name.localeCompare(b.name));
-    }
-
-    return sorted;   // "relevance" falls through untouched, original order stays
-}
-
-                                                        // Find Matches 
+                                                            // FILTER
 function findMatches(state) {
     const lowerQuery = state.query.trim().toLowerCase();
+
     return destinations.filter(destination => {
         const matchesCategory =
             state.category === "All" || destination.type === state.category;
@@ -123,18 +129,34 @@ function findMatches(state) {
             destination.name.toLowerCase().includes(lowerQuery) ||
             destination.type.toLowerCase().includes(lowerQuery);
 
-        return matchesCategory && matchesQuery;
+        const matchesFavorites =
+            !state.favoritesOnly || isFavorite(destination.id);
+
+        return matchesCategory && matchesQuery && matchesFavorites;
     });
 }
 
+                                                            // SORT
+function applySort(list, sortBy) {
+    const sorted = [...list];
 
+    if (sortBy === "budget-asc") {
+        sorted.sort((a, b) => a.budget - b.budget);
+    } else if (sortBy === "budget-desc") {
+        sorted.sort((a, b) => b.budget - a.budget);
+    } else if (sortBy === "name-asc") {
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+    }
 
-                                                        // RENDER FUNCTIONS
+    return sorted;
+}
+
+                                                            // RENDER PART * 
 function renderDestinationCards(list) {
     cardContainer.innerHTML = "";
 
     if (list.length === 0) {
-        cardContainer.innerHTML = `<p class="no-results">No destinations match your search. Try a different name or category.</p>`;
+        cardContainer.innerHTML = `<p class="no-results">No destinations match your search. Try a different name, category, or filter.</p>`;
         return;
     }
 
@@ -190,18 +212,14 @@ function scrollToShowcase() {
     document.querySelector("#explore-places").scrollIntoView({ behavior: "smooth" });
 }
 
+                                                            // CENTRAL PIPELINE
 function runSearch() {
     const matches = findMatches(searchState);
     const sorted = applySort(matches, searchState.sortBy);
     renderDestinationCards(sorted);
 }
 
-sortSelect.addEventListener("change", () => {
-    searchState.sortBy = sortSelect.value;
-    runSearch();
-});
-
-                                                        // EVENT WIRING
+                                                            // EVENT WIRING
 searchInput.addEventListener("input", () => {
     searchState.query = searchInput.value;
     renderSuggestions(findMatches(searchState));
@@ -223,14 +241,32 @@ filtersBox.addEventListener("click", (e) => {
     runSearch();
 });
 
+sortSelect.addEventListener("change", () => {
+    searchState.sortBy = sortSelect.value;
+    runSearch();
+});
+
+favoritesToggle.addEventListener("click", () => {
+    searchState.favoritesOnly = !searchState.favoritesOnly;
+    favoritesToggle.classList.toggle("active", searchState.favoritesOnly);
+    runSearch();
+});
+
+cardContainer.addEventListener("click", (e) => {
+    const heartButton = e.target.closest(".favorite-btn");
+    if (!heartButton) return;
+
+    const id = Number(heartButton.dataset.id);
+    toggleFavorite(id);
+    runSearch();
+});
+
 document.addEventListener("click", (e) => {
     if (!searchForm.contains(e.target) && !suggestionsBox.contains(e.target)) {
         suggestionsBox.classList.remove("active");
     }
 });
 
-                                                        // INITIAL PAGE LOAD
+                                                            // INITIAL PAGE LOAD !!!
 renderCategoryChips();
 runSearch();
-
-
