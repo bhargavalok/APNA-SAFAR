@@ -36,7 +36,16 @@ const destinations = [
         image: "./assets/images/tea-gardens-munnar.webp",
         description:
             "Explore the misty hills, lush tea plantations, and peaceful valleys of Munnar, a beautiful getaway surrounded by the natural charm of Kerala."
-    }
+    },
+    {
+    id: 5,
+    name: "Varanasi",
+    type: "Spiritual",
+    budget: 6000,
+    image: "./assets/images/varanasi.jpg",
+    description:
+        "One of the oldest living cities in the world, Varanasi sits on the banks of the Ganges in Uttar Pradesh. Famous for its ghats, sunrise boat rides, and the nightly Ganga Aarti ceremony, it's a place where ancient rituals continue exactly as they have for centuries."
+}
 ];
 
                                                             // DOM REFERENCES
@@ -165,7 +174,7 @@ function renderDestinationCards(list) {
         cardContainer.appendChild(card);
     });
 }
-
+                                            // Start revising from here !!!!!!!!!!! : 17 sept 2026 
 function renderSuggestions(matches) {
     suggestionsBox.innerHTML = "";
 
