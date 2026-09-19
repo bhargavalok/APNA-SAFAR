@@ -45,6 +45,15 @@ const destinations = [
     image: "./assets/images/varanasi.jpg",
     description:
         "One of the oldest living cities in the world, Varanasi sits on the banks of the Ganges in Uttar Pradesh. Famous for its ghats, sunrise boat rides, and the nightly Ganga Aarti ceremony, it's a place where ancient rituals continue exactly as they have for centuries."
+},
+{
+    id: 6,
+    name: "Kullu-Manali",
+    type: "Hill Station",
+    budget: 9000,
+    image: "./assets/images/kullu-manali.webp",
+    description:
+        "A twin-town getaway in Himachal Pradesh set along the Beas River, known for snow-capped peaks, apple orchards, and adventure sports like paragliding, river rafting, and skiing in Solang Valley. A favorite base for exploring the Rohtang Pass and the Parvati Valley."
 }
 ];
 
