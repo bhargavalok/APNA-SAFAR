@@ -1,61 +1,8 @@
 "use strict"
-                                                            // Destination data
-const destinations = [
-    {
-        id: 1,
-        name: "Hidden Waterfall Paradise",
-        type: "Nature",
-        budget: 5000,
-        image: "./assets/images/waterfall.jpg",
-        description:
-            "Discover the beauty of untouched nature where crystal-clear water cascades through lush green forests."
-    },
-    {
-        id: 2,
-        name: "Darjeeling",
-        type: "Hill Station",
-        budget: 10000,
-        image: "./assets/images/darjeeling.jpg",
-        description:
-            "a famous hill station in the northernmost part of West Bengal, India, nestled in the Eastern Himalayas at an elevation of about 2,042 meters"
-    },
-    {
-        id: 3,
-        name: "Majestic Mountain Valley",
-        type: "Adventure",
-        budget: 7000,
-        image: "./assets/images/misty-mountains.jpg",
-        description:
-            "Experience breathtaking views of towering mountains surrounded by peaceful green meadows."
-    },
-    {
-        id: 4,
-        name: "Munnar",
-        type: "Nature",
-        budget: 5000,
-        image: "./assets/images/tea-gardens-munnar.webp",
-        description:
-            "Explore the misty hills, lush tea plantations, and peaceful valleys of Munnar, a beautiful getaway surrounded by the natural charm of Kerala."
-    },
-    {
-    id: 5,
-    name: "Varanasi",
-    type: "Spiritual",
-    budget: 6000,
-    image: "./assets/images/varanasi.jpg",
-    description:
-        "One of the oldest living cities in the world, Varanasi sits on the banks of the Ganges in Uttar Pradesh. Famous for its ghats, sunrise boat rides, and the nightly Ganga Aarti ceremony, it's a place where ancient rituals continue exactly as they have for centuries."
-},
-{
-    id: 6,
-    name: "Kullu-Manali",
-    type: "Hill Station",
-    budget: 9000,
-    image: "./assets/images/kullu-manali.webp",
-    description:
-        "A twin-town getaway in Himachal Pradesh set along the Beas River, known for snow-capped peaks, apple orchards, and adventure sports like paragliding, river rafting, and skiing in Solang Valley. A favorite base for exploring the Rohtang Pass and the Parvati Valley."
-}
-];
+
+    // NOTE: "destinations" comes from data.js
+    // NOTE: 'favorites functions' come from favorites.js
+    // Both must be loaded via <script> BEFORE this file in index.html
 
                                                             // DOM REFERENCES
 const cardContainer = document.querySelector("#destination-container");
@@ -74,32 +21,7 @@ const searchState = {
     favoritesOnly: false
 };
 
-                                                            // FAVORITES: LOAD/SAVE [ localStorage Part ]
-function loadFavorites() {
-    const stored = localStorage.getItem("favoriteDestinations");
-    return stored ? JSON.parse(stored) : [];
-}
-
-function saveFavorites(ids) {
-    localStorage.setItem("favoriteDestinations", JSON.stringify(ids));
-}
-
-let favoriteIds = loadFavorites();
-
-function isFavorite(id) {
-    return favoriteIds.includes(id);
-}
-
-function toggleFavorite(id) {
-    if (isFavorite(id)) {
-        favoriteIds = favoriteIds.filter(favId => favId !== id);
-    } else {
-        favoriteIds.push(id);
-    }
-    saveFavorites(favoriteIds);
-}
-
-                                                            // DYNAMIC CARD TEMPLATE !
+                                                            // CARD TEMPLATE
 function createDestinationCard(destination) {
     const row = document.createElement("div");
     row.className = "row";
@@ -109,10 +31,9 @@ function createDestinationCard(destination) {
 
     row.innerHTML = `
         <div class="img-box">
-            <img
-                src="${destination.image}"
-                alt="${destination.name}"
-                loading="lazy"
+        <img src="${destination.thumbnail}"
+        alt="${destination.name}"
+        loading="lazy"
             >
             <button class="favorite-btn ${favorited ? "active" : ""}" data-id="${destination.id}" aria-label="Toggle favorite">
                 <i class="fa-${favorited ? "solid" : "regular"} fa-heart"></i>
@@ -125,16 +46,16 @@ function createDestinationCard(destination) {
             </p>
             <p>Type: ${destination.type}</p>
             <p>Budget: ₹${destination.budget}</p>
-            <a href="about.html"
+            <a href="destination.html?id=${destination.id}"
             class="btn btn-primary text-red btn-secondary">
-                More
+                View Details
             </a>
         </div>
     `;
     return row;
 }
 
-                                                            // FILTER
+                                                            // PURE LOGIC: FILTER
 function findMatches(state) {
     const lowerQuery = state.query.trim().toLowerCase();
 
@@ -154,7 +75,7 @@ function findMatches(state) {
     });
 }
 
-                                                            // SORT
+                                                            // PURE LOGIC: SORT
 function applySort(list, sortBy) {
     const sorted = [...list];
 
@@ -169,7 +90,7 @@ function applySort(list, sortBy) {
     return sorted;
 }
 
-                                                            // RENDER PART * 
+                                                            // RENDER FUNCTIONS
 function renderDestinationCards(list) {
     cardContainer.innerHTML = "";
 
@@ -183,7 +104,7 @@ function renderDestinationCards(list) {
         cardContainer.appendChild(card);
     });
 }
-                                            // Start revising from here !!!!!!!!!!! : 17 sept 2026 
+
 function renderSuggestions(matches) {
     suggestionsBox.innerHTML = "";
 
@@ -285,6 +206,6 @@ document.addEventListener("click", (e) => {
     }
 });
 
-                                                            // INITIAL PAGE LOAD !!!
+                                                            // INITIAL PAGE LOAD
 renderCategoryChips();
 runSearch();
