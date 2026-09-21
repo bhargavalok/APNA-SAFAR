@@ -72,5 +72,17 @@ const destinations = [
     heroImage: "./assets/images/kasauli-hero.jpg",
     description:
         "A quiet, colonial-era hill town in Himachal Pradesh, less crowded than Shimla or Manali, with pine forests, old churches, and easy walking trails like Monkey Point and Sunset Point. A good pick for a short, peaceful weekend getaway."
+},
+{
+    id: 7,
+    name: "Goa",
+    type: "Beach",
+    location: "Goa, India",
+    rating: 4.6,
+    budget: 9500,
+    thumbnail: "assets/images/goa.jpg",
+    heroImage: "assets/images/goa-hero.jpg",
+    description:
+        "India's most famous coastal getaway, known for its golden beaches, Portuguese colonial architecture, vibrant nightlife, and relaxed beach shacks. North Goa draws crowds for parties and water sports, while South Goa offers quieter, palm-fringed shores."
 }
 ];
